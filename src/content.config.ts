@@ -20,34 +20,13 @@ const posts = defineCollection({
       title: z.string().max(128),
       createdAt: z.coerce.date(),
       updatedAt: z.coerce.date().optional(),
-      category: reference("categories"),
+      category: reference("categories").optional(),
       tags: z.array(reference("tags")).optional().default([]),
       summary: z.string().optional().default(""),
       cover: image().optional(),
       draft: z.boolean().default(false),
       new: z.boolean().default(false),
     }),
-});
-
-const projects = defineCollection({
-  loader: glob({
-    pattern: "**/*.{md,mdx}",
-    base: "./src/content/projects",
-  }),
-  schema: z.object({
-    title: z.string(),
-    description: z.string(),
-    tech: z.array(z.string()),
-    links: z.object({
-      homepage: z.string().url().optional(),
-      github: z.string().url().optional(),
-      demo: z.string().url().optional(),
-    }).optional(),
-    status: z
-      .enum(["planning", "in-progress", "completed", "archived"])
-      .default("completed"),
-    image: z.string().optional(),
-  }),
 });
 
 const categories = defineCollection({
@@ -80,17 +59,6 @@ const tags = defineCollection({
   }),
 });
 
-const friends = defineCollection({
-  loader: file("./src/content/miscs/friends.json"),
-  schema: z.object({
-    order: z.number().int().nonnegative().optional().default(0),
-    name: z.string().max(64),
-    description: z.string().optional().describe("One line string"),
-    link: z.string().url(),
-    avatar: z.string(),
-  }),
-});
-
 const pages = defineCollection({
   loader: glob({
     pattern: "**/*.{md,mdx}",
@@ -104,9 +72,7 @@ const pages = defineCollection({
 
 export const collections = {
   posts,
-  projects,
   categories,
   tags,
-  friends,
   pages,
 };

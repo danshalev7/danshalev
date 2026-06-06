@@ -1,20 +1,72 @@
 ---
+import { getEntry, render } from "astro:content";
 import site from "@/config/site";
 import Layout from "@/layouts/Layout.astro";
-import { getEntry, render } from "astro:content";
+import { loadQuery } from "@/sanity/lib/load-query";
+import PortableText from "@/components/md/PortableText.astro";
 
-const about = await getEntry("pages", "about");
-const { Content } = await render(about!);
+let sanityBody: any = null;
+let LocalContent: any = null;
+let pageTitle = "";
+let pageDescription = "";
+
+try {
+  const { data } = await loadQuery<any>({
+    query: `*[_type == "page" && slug.current == "about"][0]`,
+  });
+  sanityBody = data?.body || null;
+} catch {
+  // Sanity not configured
+}
+
+if (!sanityBody) {
+  const pageEntry = await getEntry("pages", "about");
+  if (pageEntry) {
+    const { Content } = await render(pageEntry);
+    LocalContent = Content;
+    pageTitle = pageEntry.data.title;
+    pageDescription = pageEntry.data.description || "";
+  }
+}
 ---
 
-<Layout title={site.labels.aboutTitle} description={site.labels.aboutDescription}>
+<Layout
+  title={LocalContent ? pageTitle : site.labels.aboutTitle}
+  description={pageDescription || site.labels.aboutDescription}
+>
   <div class="animate-in fade-in mx-auto max-w-2xl p-8 duration-700 md:p-16">
-    <div class="prose dark:prose-invert">
-      <Content />
+    <header class="mb-12">
+      <h2
+        class="mb-4 text-3xl font-black tracking-tighter text-on-surface uppercase"
+      >
+        About
+      </h2>
+      <p class="text-sm font-light text-on-surface-muted italic">
+        {pageDescription || "About Dan Shalev"}
+      </p>
+    </header>
+
+    <div class="prose prose-invert">
+      {
+        sanityBody ? (
+          <PortableText portableText={sanityBody} />
+        ) : LocalContent ? (
+          <LocalContent />
+        ) : (
+          <p class="text-on-surface-muted">
+            About content will be available once Sanity is configured. Run{" "}
+            <code>npx sanity@latest init</code> to set up your Sanity project,
+            then create an "About" page in the Studio at{" "}
+            <a href="/studio">/studio</a>.
+          </p>
+        )
+      }
     </div>
 
     <footer class="mt-14 space-y-6">
-      <h4 class="text-[10px] font-bold tracking-[0.3em] text-primary uppercase">
+      <h4
+        class="text-[10px] font-bold tracking-[0.18em] text-flat-cobalt uppercase"
+      >
         Contact
       </h4>
       <div class="flex flex-wrap gap-4">
@@ -22,7 +74,7 @@ const { Content } = await render(about!);
           site.social.map((item) => (
             <a
               href={item.href}
-              class="border-b border-border pb-0.5 text-sm text-muted-foreground hover:border-primary hover:text-primary"
+              class="pb-0.5 text-sm text-on-surface-muted transition-colors duration-100 ease-snap hover:text-flat-cobalt"
               title={item.name}
             >
               {item.name}

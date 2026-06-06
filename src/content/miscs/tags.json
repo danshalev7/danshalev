@@ -5,5 +5,9 @@
   { "name": "TypeScript", "slug": "typescript" },
   { "name": "CSS", "slug": "css" },
   { "name": "Markdown", "slug": "markdown" },
-  { "name": "Tutorial", "slug": "tutorial" }
+  { "name": "Tutorial", "slug": "tutorial" },
+  { "name": "Marketing", "slug": "marketing" },
+  { "name": "AI", "slug": "generative-ai" },
+  { "name": "Startups", "slug": "startups" },
+  { "name": "DevTools", "slug": "devtools" }
 ]

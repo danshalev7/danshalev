@@ -31,17 +31,17 @@ const tags = (await getEntries(post.data.tags)).filter((value) => value);
   <article
     class="animate-in fade-in mx-auto max-w-2xl overflow-x-hidden p-8 duration-1000 md:p-16"
   >
-    <header class="mb-16 border-b border-border/50 pb-12">
+    <header class="mb-16 border-b border-white/5 pb-12">
       <div
-        class="mb-6 flex items-center gap-2 text-[10px] font-bold tracking-[0.2em] text-primary uppercase"
+        class="mb-6 flex items-center gap-2 text-[10px] font-bold tracking-[0.18em] text-flat-cobalt uppercase"
       >
-        <a href="/posts" class="hover:underline">Writing</a>
-        <span class="text-muted-foreground/30">/</span>
+        <a href="/writing" class="hover:underline">Writing</a>
+        <span class="text-on-surface-muted/30">/</span>
         <span>Detail</span>
       </div>
 
       <h1
-        class="mb-8 text-3xl leading-[1.4] font-bold text-foreground md:text-4xl"
+        class="mb-8 text-3xl leading-[1.4] font-black tracking-tighter text-on-surface uppercase md:text-4xl"
       >
         {post.data.title}
       </h1>
@@ -50,7 +50,7 @@ const tags = (await getEntries(post.data.tags)).filter((value) => value);
         class="animate-in fade-in flex flex-wrap gap-2 font-mono text-[12px] tracking-tight duration-1000 md:gap-3"
       >
         <div
-          class="flex items-center gap-3 rounded-full border border-border/40 bg-muted/40 px-3 py-1 text-muted-foreground"
+          class="flex items-center gap-3 rounded-full bg-surface-lowest px-3 py-1 text-on-surface-muted"
         >
           <div class="flex items-center gap-1.5">
             <Icon name={"mdi:calendar-blank"} />
@@ -62,10 +62,10 @@ const tags = (await getEntries(post.data.tags)).filter((value) => value);
               }</span
             >
           </div>
-          <span class="h-3 w-px bg-border"></span>
+          <span class="h-3 w-px bg-white/10"></span>
           <a
             href={`/categories/${category.data.slug}`}
-            class="flex cursor-pointer items-center gap-1.5 transition-colors hover:text-primary"
+            class="flex cursor-pointer items-center gap-1.5 transition-colors duration-100 ease-snap hover:text-flat-cobalt"
           >
             <Icon name={"mdi:category-outline"} />
             <span>{category.data.name}</span>
@@ -73,29 +73,11 @@ const tags = (await getEntries(post.data.tags)).filter((value) => value);
         </div>
 
         <div
-          class="flex items-center gap-4 rounded-full border border-border/20 bg-muted/20 px-3 py-1 text-muted-foreground/60"
+          class="flex items-center gap-4 rounded-full bg-surface-lowest/50 px-3 py-1 text-on-surface-muted/60"
         >
           <div class="flex items-center gap-1.5">
             <span class="post-words-count">{post.body?.length} </span>
             <span class="text-[10px] uppercase opacity-90">Words</span>
-          </div>
-
-          <div class="flex items-center gap-1.5">
-            <span
-              class="artalk-pv-count"
-              data-page-key={Astro.url.pathname}
-              class="font-bold text-foreground/80">-</span
-            >
-            <span class="text-[10px] uppercase opacity-90">Views</span>
-          </div>
-
-          <div class="flex items-center gap-1.5">
-            <span
-              class="artalk-comment-count"
-              data-page-key={Astro.url.pathname}
-              class="font-bold text-foreground/80">-</span
-            >
-            <span class="text-[10px] uppercase opacity-90">Comments</span>
           </div>
         </div>
       </div>
@@ -105,11 +87,10 @@ const tags = (await getEntries(post.data.tags)).filter((value) => value);
 
     <div
       class:list={[
-        "prose max-w-none dark:prose-invert",
+        "prose max-w-none prose-invert",
         "prose-headings:tracking-tight",
-        "prose-p:mb-8 prose-p:leading-loose prose-p:font-normal prose-p:text-muted-foreground",
-        "prose-code:rounded-sm prose-code:bg-primary/15 prose-code:px-1.5 prose-code:py-0.5 prose-code:text-primary prose-code:before:content-none prose-code:after:content-none",
-        "prose-",
+        "prose-p:mb-8 prose-p:leading-loose prose-p:font-normal prose-p:text-on-surface-muted",
+        "prose-code:rounded-sm prose-code:bg-flat-cobalt/15 prose-code:px-1.5 prose-code:py-0.5 prose-code:text-flat-cobalt prose-code:before:content-none prose-code:after:content-none",
       ]}
       data-pagefind-body
     >
@@ -123,12 +104,12 @@ const tags = (await getEntries(post.data.tags)).filter((value) => value);
         tags.map((tag) => (
           <a
             href={`/tags/${tag.data.slug}`}
-            class="group flex items-center gap-1.5 rounded-xl border border-border/50 bg-muted/30 px-3 py-1.5 transition-all hover:border-primary/40 hover:bg-card"
+            class="group flex items-center gap-1.5 rounded-xl bg-surface-lowest px-3 py-1.5 transition-all duration-100 ease-snap hover:bg-flat-cobalt/10"
           >
-            <span class="font-mono text-xs text-primary/40 italic group-hover:text-primary">
+            <span class="font-mono text-xs text-flat-cobalt/40 italic group-hover:text-flat-cobalt">
               #
             </span>
-            <span class="text-xs font-medium text-muted-foreground transition-colors group-hover:text-foreground">
+            <span class="text-xs font-medium text-on-surface-muted transition-colors duration-100 ease-snap group-hover:text-on-surface">
               {tag.data.name}
             </span>
           </a>
@@ -139,18 +120,21 @@ const tags = (await getEntries(post.data.tags)).filter((value) => value);
 
   <footer class="mt-16 space-y-12 px-8 md:px-16">
     <div
-      class="flex items-center justify-between border-t border-b border-border/50 py-5"
+      class="flex items-center justify-between border-t border-b border-white/5 py-5"
     >
       <a
-        href="/posts"
-        class="group flex items-center gap-2 text-sm text-muted-foreground hover:text-primary"
+        href="/writing"
+        class="group flex items-center gap-2 text-sm text-on-surface-muted transition-colors duration-100 ease-snap hover:text-flat-cobalt"
       >
-        <span class="transition-transform group-hover:-translate-x-1">
+        <span
+          class="transition-transform duration-100 ease-snap group-hover:-translate-x-1"
+        >
           <Icon name="mdi:arrow-left" size={14} />
-        </span> {site.labels.backToPosts}
+        </span>
+        {site.labels.backToPosts}
       </a>
       <div
-        class="font-mono text-[10px] tracking-widest text-muted-foreground/30 uppercase"
+        class="font-mono text-[10px] tracking-widest text-on-surface-muted/30 uppercase"
       >
         {site.labels.endOfPost}
       </div>
@@ -167,10 +151,8 @@ const tags = (await getEntries(post.data.tags)).filter((value) => value);
     word-break: break-word;
   }
 
-  .post-words-count,
-  .artalk-pv-count,
-  .artalk-comment-count {
-    color: var(--primary);
+  .post-words-count {
+    color: var(--flat-cobalt);
     font-weight: 400;
     opacity: 0.8;
   }
@@ -184,7 +166,6 @@ const tags = (await getEntries(post.data.tags)).filter((value) => value);
     content: attr(data-updated);
     top: -33px;
     width: fit-content;
-    border: 1px solid var(--border);
     border-radius: 2rem;
     text-align: center;
     background-color: var(--muted);

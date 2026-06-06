@@ -21,5 +21,11 @@
     "name": "Uncategorized",
     "slug": "uncategorized",
     "icon": "mdi:folder"
+  },
+  {
+    "name": "Marketing",
+    "slug": "marketing",
+    "description": "B2B marketing, growth strategy, and go-to-market for deep-tech startups",
+    "icon": "mdi:trending-up"
   }
 ]

@@ -1,0 +1,27 @@
+---
+interface Props {
+  label: string;
+  id: string;
+  placeholder?: string;
+  value?: string;
+}
+
+const { label, id, placeholder, value } = Astro.props;
+---
+
+<div class="flex w-full max-w-[420px] flex-col">
+  <label
+    for={id}
+    class="mb-3 text-[10px] font-bold tracking-[0.18em] text-on-surface-muted uppercase"
+  >
+    {label}
+  </label>
+  <input
+    type="text"
+    id={id}
+    name={id}
+    placeholder={placeholder}
+    value={value}
+    class="border border-white/5 bg-surface-low p-[18px] font-sans text-sm text-on-surface transition-colors duration-100 ease-snap outline-none focus:border-flat-cyan"
+  />
+</div>

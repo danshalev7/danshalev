@@ -1,0 +1,30 @@
+---
+interface Props {
+  variant?: "primary" | "secondary";
+  href?: string;
+  class?: string;
+  [x: string]: any;
+}
+
+const { variant = "primary", href, class: className, ...props } = Astro.props;
+
+const baseStyles =
+  "inline-block font-sans text-[11px] font-bold tracking-[0.15em] uppercase px-9 py-4.5 cursor-pointer transition-colors duration-100 ease-snap select-none";
+
+const variants = {
+  primary:
+    "bg-flat-cobalt text-on-surface hover:bg-flat-cyan hover:text-surface [clip-path:polygon(0_0,_90%_0,_100%_35%,_100%_100%,_0_100%)]",
+  secondary:
+    "bg-transparent border-[1.5px] border-flat-cobalt text-on-surface hover:bg-flat-cobalt/10",
+};
+
+const Tag = href ? "a" : "button";
+---
+
+<Tag
+  href={href}
+  class:list={[baseStyles, variants[variant], className]}
+  {...props}
+>
+  <slot />
+</Tag>

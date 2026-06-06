@@ -1,13 +1,12 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
-@custom-variant dark (&:where(.dark, .dark *));
 
 @import "./theme.css";
 
 /* Focus indicators for accessibility */
 a:focus-visible,
 button:focus-visible {
-  outline: 2px solid hsl(var(--primary));
+  outline: 2px solid var(--flat-cobalt);
   outline-offset: 2px;
   border-radius: 4px;
 }
@@ -26,22 +25,22 @@ button:focus-visible {
 @layer components {
   .prose {
     & table {
-      @apply my-8 w-full border-collapse border-spacing-0 overflow-hidden rounded-md border border-border/50 shadow-sm;
+      @apply my-8 w-full border-collapse border-spacing-0 overflow-hidden rounded-md bg-surface-low shadow-none;
     }
     & thead {
-      @apply border-b border-border bg-muted/50;
+      @apply bg-surface-lowest;
     }
     & th {
-      @apply px-6 py-4 text-left text-xs font-bold tracking-widest text-primary/80 uppercase;
+      @apply px-6 py-4 text-left text-xs font-bold tracking-widest text-on-surface-muted uppercase;
     }
     & td {
-      @apply border-b border-border/30 px-6 py-4 text-sm text-muted-foreground;
+      @apply border-b border-white/5 px-6 py-4 text-sm text-on-surface-muted;
     }
     & tr:last-child td {
       @apply border-b-0;
     }
     & tr:hover td {
-      @apply bg-primary/5 transition-colors;
+      @apply bg-flat-cobalt/10 transition-colors;
     }
   }
 }
@@ -67,7 +66,7 @@ button:focus-visible {
   width: 3px;
 }
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: var(--border);
+  background: rgba(255, 255, 255, 0.1);
   border-radius: 10px;
 }
 
@@ -83,7 +82,7 @@ button:focus-visible {
 }
 
 .animate-in {
-  animation: animate-in-enter 0.42s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: animate-in-enter 0.42s var(--ease-snap) forwards;
 }
 
 html[data-astro-transition] *,

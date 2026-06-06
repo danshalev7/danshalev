@@ -4,9 +4,13 @@ import site from "@/config/site";
 ---
 
 <section class="mb-16">
-  <h2 class="mb-6 text-3xl font-bold tracking-tight">{site.hero.greeting}</h2>
+  <h2
+    class="mb-6 text-3xl font-black tracking-tighter text-on-surface uppercase"
+  >
+    {site.hero.greeting}
+  </h2>
   <p
-    class="text-lg leading-relaxed font-light text-muted-foreground"
+    class="text-lg leading-relaxed font-light text-on-surface-muted"
     set:html={site.hero.description}
   />
 </section>
@@ -16,17 +20,17 @@ import site from "@/config/site";
     <div class="mb-16 grid grid-cols-1 gap-4 md:grid-cols-2">
       {site.hero.cards.map((card, i) => (
         <div
-          class="flex gap-4 rounded-2xl border border-border/50 bg-muted/30 p-5 transition-all duration-300 hover:border-primary/30 hover:bg-muted/40 hover:-translate-y-1"
+          class="flex gap-4 rounded-2xl bg-surface-low p-5 transition-all duration-100 ease-snap hover:-translate-y-1"
           style={`animation-delay: ${i * 100}ms`}
         >
-          <div class="text-lg text-primary transition-transform duration-300 group-hover:scale-110">
+          <div class="text-lg text-flat-cobalt">
             <Icon name={card.icon} />
           </div>
           <div class="flex flex-col">
-            <span class="text-[10px] font-bold tracking-widest text-muted-foreground uppercase">
+            <span class="text-[10px] font-bold tracking-[0.18em] text-on-surface-muted uppercase">
               {card.label}
             </span>
-            <span class="text-sm text-foreground/80">{card.value}</span>
+            <span class="text-sm text-on-surface/80">{card.value}</span>
           </div>
         </div>
       ))}

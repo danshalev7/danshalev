@@ -6,17 +6,35 @@ import mdx from "@astrojs/mdx";
 import icon from "astro-icon";
 import expressiveCode from "astro-expressive-code";
 import sitemap from "@astrojs/sitemap";
+import react from "@astrojs/react";
+import compress from "@playform/compress";
+
+// Conditionally load Sanity integration
+const sanityProjectId = process.env.PUBLIC_SANITY_PROJECT_ID || "";
+
+const sanityIntegration = sanityProjectId
+  ? (await import("@sanity/astro")).default({
+      projectId: sanityProjectId,
+      dataset: process.env.PUBLIC_SANITY_DATASET || "production",
+      useCdn: true,
+      apiVersion: "2025-01-28",
+      studioBasePath: "/studio",
+    })
+  : null;
 
 // https://astro.build/config
 export default defineConfig({
-  // IMPORTANT: Change this to your deployed site URL
-  site: "https://your-domain.com",
+  site: "https://shalevdan.com",
+
+  output: "static",
 
   vite: {
     plugins: [tailwindcss()],
   },
 
   integrations: [
+    ...(sanityIntegration ? [sanityIntegration] : []),
+    react(),
     expressiveCode({
       themeCssSelector: (theme) => `.${theme.type}`,
       themes: ["material-theme-darker", "material-theme-lighter"],
@@ -24,6 +42,14 @@ export default defineConfig({
     mdx(),
     icon(),
     sitemap(),
+    compress({
+      CSS: true,
+      HTML: true,
+      Image: true,
+      JavaScript: true,
+      JSON: true,
+      SVG: true,
+    }),
   ],
 
   env: {
@@ -38,12 +64,12 @@ export default defineConfig({
         access: "public",
         optional: true,
       }),
-      PUBLIC_ARTALK_SERVER: envField.string({
+      PUBLIC_SANITY_PROJECT_ID: envField.string({
         context: "server",
         access: "public",
         optional: true,
       }),
-      PUBLIC_ARTALK_ENABLED: envField.boolean({
+      PUBLIC_SANITY_DATASET: envField.string({
         context: "server",
         access: "public",
         optional: true,
@@ -53,8 +79,8 @@ export default defineConfig({
 
   fonts: [
     {
-      provider: fontProviders.fontsource(),
-      name: "Space Grotesk",
+      provider: fontProviders.google(),
+      name: "Inter",
       cssVariable: "--font-display",
     },
   ],

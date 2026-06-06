@@ -17,40 +17,51 @@ const category = await getEntry(
 
 // Auto-detect if post is new based on creation date
 // Draft posts should not show "new" badge
-const isNew = !post.data.draft && (post.data.new || (site.features.newPostDays > 0 &&
-  (Date.now() - new Date(post.data.createdAt).getTime()) / (1000 * 60 * 60 * 24) <= site.features.newPostDays));
+const isNew =
+  !post.data.draft &&
+  (post.data.new ||
+    (site.features.newPostDays > 0 &&
+      (Date.now() - new Date(post.data.createdAt).getTime()) /
+        (1000 * 60 * 60 * 24) <=
+        site.features.newPostDays));
 ---
 
 <article
-  class="group flex cursor-pointer items-center justify-between border-b border-border/40 py-6 last:border-0"
+  class="group flex cursor-pointer items-center justify-between border-b border-white/5 py-6 last:border-0"
 >
   <div>
     <a
-      href={`/posts/${post.id}`}
-      class="inline-flex items-center gap-2 text-lg font-semibold text-foreground/80 transition-colors duration-300 group-hover:text-primary"
+      href={`/writing/${post.id}`}
+      class="inline-flex items-center gap-2 text-lg font-semibold text-on-surface/80 transition-colors duration-100 ease-snap group-hover:text-flat-cobalt"
     >
       <span>{post.data.title}</span>
-      {isNew && (
-        <span class="rounded bg-primary/10 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-primary">
-          New
-        </span>
-      )}
-      {post.data.draft && (
-        <span class="rounded bg-muted px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
-          Draft
-        </span>
-      )}
+      {
+        isNew && (
+          <span class="rounded bg-flat-cobalt/10 px-1.5 py-0.5 text-[10px] font-bold tracking-wider text-flat-cobalt uppercase">
+            New
+          </span>
+        )
+      }
+      {
+        post.data.draft && (
+          <span class="rounded bg-surface-lowest px-1.5 py-0.5 text-[10px] font-bold tracking-wider text-on-surface-muted uppercase">
+            Draft
+          </span>
+        )
+      }
     </a>
     <p
-      class="mt-2 font-mono text-[11px] text-muted-foreground italic opacity-60"
+      class="mt-2 font-mono text-[11px] text-on-surface-muted italic opacity-60"
     >
       {formatDate(post.data.createdAt)} —
-      <a href={`/categories/${category?.id}`} class="hover:text-primary">
+      <a href={`/categories/${category?.id}`} class="hover:text-flat-cobalt">
         {category?.data.name}
       </a>
     </p>
   </div>
-  <span class="text-border transition-all duration-300 group-hover:translate-x-1 group-hover:text-primary">
+  <span
+    class="text-white/20 transition-all duration-100 ease-snap group-hover:translate-x-1 group-hover:text-flat-cobalt"
+  >
     <Icon name="mdi:arrow-right" />
   </span>
 </article>
